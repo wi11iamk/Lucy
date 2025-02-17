@@ -70,9 +70,9 @@ alma_ai_companion/
 ---
 
 ## Future Plans
-- **Speech-to-Text Support** 🎙️ for voice interactions.
-- **Long-Term Memory Recall** 📚 for more personalized conversations.
-- **Advanced NLP Models** 🤖 for improved engagement.
+- **Speech-to-Text Support** for voice interactions.
+- **Long-Term Memory Recall** for more personalized conversations.
+- **Advanced NLP Models** for improved engagement.
 
 ---
 
@@ -86,4 +86,4 @@ alma_ai_companion/
 ## Contributions
 If you're interested in improving Alma, feel free to submit a pull request or open an issue.
 
-**Maintainers**: `@ywi11iamk`
+**Maintainers**: `@wi11iamk`
