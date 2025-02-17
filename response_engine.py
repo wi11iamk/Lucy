@@ -86,17 +86,3 @@ def log_interaction(user_input, emotion_scores, prompt, llm_response, log_file=L
     }
     with open(log_file, "a") as f:
         f.write(json.dumps(log_entry) + "\n")
-
-# Define a few-shot examples list to guide the LLM's responses.
-few_shot_examples = [
-    {
-        "input": "I'm feeling really overwhelmed and confused lately.",
-        "emotion_summary": "fear: 0.70, sadness: 0.60",
-        "response": "I'm sorry you're feeling overwhelmed. It might help to take a moment to breathe and focus on something familiar. I'm here to listen if you want to share more."
-    },
-    {
-        "input": "I feel isolated and alone.",
-        "emotion_summary": "loneliness: 0.85, sadness: 0.75",
-        "response": "It sounds like you're feeling very lonely right now. Remember, you're not alone, and it's okay to seek support. Would you like to talk about what might help you feel more connected?"
-    }
-]
