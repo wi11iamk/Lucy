@@ -11,10 +11,10 @@ As people age, some experience cognitive decline that affects their ability to c
 ## What Alma Does
 
 Alma is built to:
-✔ Engage in **clear, simple, and supportive conversations**  
-✔ Track **changes in speech patterns** over time  
-✔ Ensure **AI-generated responses are safe and appropriate**  
-✔ Protect **patient data** and prevent unauthorized access  
+Engage in **clear, simple, and supportive conversations**  
+Track **changes in speech patterns** over time  
+Ensure **AI-generated responses are safe and appropriate**  
+Protect **patient data** and prevent unauthorized access  
 
 ---
 
