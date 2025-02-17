@@ -1,6 +1,6 @@
 # Alma: A Dementia-Friendly AI Companion
 
-## 📌 Why Alma?
+## Why Alma?
 
 As people age, some experience cognitive decline that affects their ability to communicate and remember important details. Caregivers and family members often struggle to provide continuous support while ensuring their loved ones remain engaged and safe. 
 
@@ -8,7 +8,7 @@ As people age, some experience cognitive decline that affects their ability to c
 
 ---
 
-## 📖 What Alma Does
+## What Alma Does
 
 Alma is built to:
 ✔ Engage in **clear, simple, and supportive conversations**  
@@ -18,7 +18,7 @@ Alma is built to:
 
 ---
 
-## 📦 Installation
+## Installation
 
 Install dependencies before running Alma:
 
@@ -29,21 +29,21 @@ python -m spacy download en_core_web_sm
 
 ---
 
-## 🚀 How to Use
+## How to Use
 
 ### **Running Alma**
-1️⃣ Clone the repository:
+Clone the repository:
 ```bash
 git clone https://github.com/your-repo/alma-ai-companion.git
 cd alma-ai-companion
 ```
 
-2️⃣ Run the main script:
+Run the main script:
 ```bash
 python main.py
 ```
 
-3️⃣ Example Output:
+Example Output:
 ```
 AI Response: That sounds interesting! Tell me more.
 Cognitive Report: Speech patterns stable
@@ -52,7 +52,7 @@ Encrypted Log: gAAAAABj... (Encrypted data)
 
 ---
 
-## 🔍 Project Structure
+## Project Structure
 ```
 alma_ai_companion/
 │── main.py                  # Main execution file
@@ -70,21 +70,21 @@ alma_ai_companion/
 
 ---
 
-## 📌 Future Plans
+## Future Plans
 - **Speech-to-Text Support** 🎙️ for voice interactions.
 - **Long-Term Memory Recall** 📚 for more personalized conversations.
 - **Advanced NLP Models** 🤖 for improved engagement.
 
 ---
 
-## 🏥 Considerations
+## Considerations
 - **Data Security**: Patient logs are encrypted and access is restricted.  
 - **Responsible AI**: Responses are designed to be **clear and non-misleading**.  
 - **Caregiver Support**: Alma is **not a replacement for human care** but a tool to assist caregivers.
 
 ---
 
-## 🤝 Contributions
+## Contributions
 If you're interested in improving Alma, feel free to submit a pull request or open an issue.
 
 **Maintainers**: `@ywi11iamk`
