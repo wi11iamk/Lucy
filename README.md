@@ -2,7 +2,7 @@
 
 ## Why Alma?
 
-As people age, some experience cognitive decline, in the form of dementia, that affects their ability to communicate and remember important details. Caregivers and family members often struggle to provide continuous support while ensuring their loved ones remain connected and safe. 
+As people age, some experience cognitive decline that affects their ability to communicate and remember important details. Caregivers and family members often struggle to provide continuous support while ensuring their loved ones remain connected and safe. 
 
 **Alma** is designed as a **conversational AI companion** to augment social-emotional engagement for patients of dementia and give caregivers tools to track changes in communication patterns.
 
@@ -10,10 +10,10 @@ As people age, some experience cognitive decline, in the form of dementia, that 
 
 ## What Alma Does
 
-Engage in **clear, simple, and supportive conversations**  
-Track **changes in speech patterns** over time  
-Ensure **AI-generated responses are safe and appropriate**  
-Protect **patient data** and prevent unauthorized access  
+- Engage in **clear, simple, and supportive conversations**  
+- Track **changes in speech patterns** over time  
+- Ensure **AI-generated responses are safe and appropriate**  
+- Protect **patient data** and prevent unauthorized access  
 
 ---
 
