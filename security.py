@@ -4,7 +4,7 @@ from collections import defaultdict
 from cryptography.fernet import Fernet
 
 # Load encryption key securely from environment variables
-ENCRYPTION_KEY = os.getenv("ALMA_ENCRYPTION_KEY", Fernet.generate_key())
+ENCRYPTION_KEY = os.getenv("LUCY_ENCRYPTION_KEY", Fernet.generate_key())
 cipher_suite = Fernet(ENCRYPTION_KEY)
 
 # Define user roles and their permissions
