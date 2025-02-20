@@ -44,7 +44,7 @@ python -m spacy download en_core_web_sm
 Set up the encryption key securely:
 
 ```bash
-export ALMA_ENCRYPTION_KEY="your_secure_encryption_key_here"
+export LUCY_ENCRYPTION_KEY="your_secure_encryption_key_here"
 ```
 
 ## How to Use
@@ -53,8 +53,8 @@ export ALMA_ENCRYPTION_KEY="your_secure_encryption_key_here"
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/your-repo/alma-ai-companion.git
-cd alma-ai-companion
+git clone https://github.com/your-repo/lucy-ai-companion.git
+cd lucy-ai-companion
 ```
 
 2. Run the main script:
@@ -71,7 +71,7 @@ Encrypted Log: gAAAAABj... (Encrypted data)
 
 ## Project Structure
 ```
-alma_ai_companion/
+lucy_ai_companion/
 │── main.py                  # Main execution file
 │── config.py                # Configuration settings
 │── response_engine.py       # Generates dementia-friendly responses
