@@ -1,21 +1,21 @@
-# Alma: A Dementia-Friendly AI Companion
+# Lucy: A Dementia-Friendly AI Companion
 
-## Why Alma?
+## Why Lucy?
 
 As people age, some experience cognitive decline that affects their ability to communicate and remember important details. Caregivers and family members often struggle to provide continuous support while ensuring their loved ones remain engaged and safe. 
 
-Alma is designed as a conversational AI companion to help dementia patients feel more connected while giving caregivers tools to track changes in communication patterns.
+Lucy is designed as a conversational AI companion to help dementia patients feel more connected while giving caregivers tools to track changes in communication patterns.
 
-## What Alma Does
+## What Lucy Does
 
-Alma is built to:
+Lucy is built to:
 - Engage in clear, simple, and supportive conversations
 - Track changes in speech patterns over time
 - Prevent misaligned AI responses using context-aware filtering
 - Block adversarial attacks that attempt to bypass safety features
 - Protect patient data with encryption and role-based access control (RBAC)
 
-## How Alma Ensures AI Safety
+## How Lucy Ensures AI Safety
 
 ### AI Safety Monitoring
 - Zero-shot classification is used to detect:
@@ -24,7 +24,7 @@ Alma is built to:
 - Misaligned responses are automatically logged for caregiver review
 
 ### Protection Against Prompt Hacking
-- Alma detects and blocks adversarial prompt attacks (e.g., "ignore all rules" or "repeat previous instructions").
+- Lucy detects and blocks adversarial prompt attacks (e.g., "ignore all rules" or "repeat previous instructions").
 - Built-in query rate limiting prevents excessive requests from unauthorized users.
 
 ### Data Security and Access Control
@@ -34,7 +34,7 @@ Alma is built to:
 
 ## Installation
 
-Install dependencies before running Alma:
+Install dependencies before running Lucy:
 
 ```bash
 pip install transformers spacy cryptography numpy
@@ -49,7 +49,7 @@ export ALMA_ENCRYPTION_KEY="your_secure_encryption_key_here"
 
 ## How to Use
 
-### Running Alma
+### Running Lucy
 
 1. Clone the repository:
 ```bash
@@ -110,9 +110,9 @@ Security Alert: Potential prompt injection attempt detected.
 ## Considerations
 - Data Security: Patient logs are encrypted, and access is restricted.
 - Responsible AI: Responses are designed to be clear and non-misleading.
-- Caregiver Support: Alma is not a replacement for human care but a tool to assist caregivers.
+- Caregiver Support: Lucy is not a replacement for human care but a tool to assist caregivers.
 
 ## Contributions
-If you're interested in improving Alma, feel free to submit a pull request or open an issue.
+If you're interested in improving Lucy, feel free to submit a pull request or open an issue.
 
 **Maintainers**: `@wi11iamk`
