@@ -2,7 +2,6 @@
 
 import sys
 from auth import authenticate
-from config import AUTHORIZED_USERS
 from response_engine import generate_response_with_llm, log_interaction
 
 # 🔐 NEW imports
@@ -21,10 +20,8 @@ if authenticate(user, password) != "Access granted":
     print("Authentication failed.")
     sys.exit()
 
-user_id = user                      # could be email / UUID in real app
-user_input = (
-    "I feel like I'm forgetting too much these days and it's really scary."
-)
+user_id = user  # could be email / UUID in real app
+user_input = "I feel like I'm forgetting too much these days and it's really scary."
 
 # --------------------------------------------------
 # 2  Rate-limit check
@@ -36,7 +33,7 @@ if enforce_rate_limit(user_id) != "Request allowed.":
 # 3  Prompt-injection guard
 clean_input = detect_prompt_injection(user_input)
 if clean_input.startswith("⚠️ Security Alert"):
-    print(clean_input)              # prints the warning message
+    print(clean_input)  # prints the warning message
     sys.exit()
 
 # --------------------------------------------------
