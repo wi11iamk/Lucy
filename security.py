@@ -3,8 +3,11 @@ import time
 from collections import defaultdict
 from cryptography.fernet import Fernet
 
+from dotenv import load_dotenv
+load_dotenv()
+
 # Load encryption key securely from environment variables
-ENCRYPTION_KEY = os.getenv("LUCY_ENCRYPTION_KEY", Fernet.generate_key())
+ENCRYPTION_KEY = os.getenv("LUCY_ENCRYPTION_KEY").encode()
 cipher_suite = Fernet(ENCRYPTION_KEY)
 
 # Define user roles and their permissions

@@ -1,18 +1,30 @@
-import openai
+from openai import OpenAI
 import json
 import datetime
 from transformers import pipeline
-from config import OPENAI_API_KEY, SENTIMENT_MODEL, EMOTION_MODEL, FEW_SHOT_EXAMPLES, LOG_FILE_PATH
+from config import SENTIMENT_MODEL, EMOTION_MODEL, FEW_SHOT_EXAMPLES, LOG_FILE_PATH
 
-# Set OpenAI API key from config
-openai.api_key = OPENAI_API_KEY
+from dotenv import load_dotenv
+load_dotenv()
+client = OpenAI()                              # reads OPENAI_API_KEY from env
+
+import os
+import pathlib
+pathlib.Path("logs").mkdir(exist_ok=True)
+
+os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
 # Load pre-trained models using the configuration
-sentiment_model = pipeline("sentiment-analysis")
+
+sentiment_model = pipeline(
+    "sentiment-analysis",
+    model="distilbert/distilbert-base-uncased-finetuned-sst-2-english",
+)
+
 emotion_model = pipeline(
     "text-classification",
-    model=EMOTION_MODEL,
-    return_all_scores=True
+    model="j-hartmann/emotion-english-distilroberta-base",
+    top_k=None,        # replaces return_all_scores=True
 )
 
 def analyze_emotion(user_input):
@@ -58,18 +70,16 @@ def generate_response_with_llm(user_input, few_shot_examples=FEW_SHOT_EXAMPLES):
     """
     emotion_scores = analyze_emotion(user_input)
     prompt = build_prompt_with_examples(user_input, emotion_scores, few_shot_examples)
-    
-    response = openai.Completion.create(
-        engine="text-davinci-003",
-        prompt=prompt,
+
+    chat_response = client.chat.completions.create(
+        model="gpt-3.5-turbo-0125",            # or "gpt-4o-mini" etc.
+        messages=[{"role": "user", "content": prompt}],
         max_tokens=150,
         temperature=0.7,
         top_p=0.95,
-        n=1,
-        stop=None,
     )
-    
-    generated_text = response.choices[0].text.strip()
+
+    generated_text = chat_response.choices[0].message.content.strip()
     return generated_text, emotion_scores, prompt
 
 def log_interaction(user_input, emotion_scores, prompt, llm_response, log_file=LOG_FILE_PATH):
