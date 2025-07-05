@@ -8,7 +8,14 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Load encryption key securely from environment variables
-ENCRYPTION_KEY = os.getenv("LUCY_ENCRYPTION_KEY").encode()
+key = os.getenv("LUCY_ENCRYPTION_KEY")
+if not key:
+    raise RuntimeError(
+        "⚠️ LUCY_ENCRYPTION_KEY environment variable not set."
+        "Define it in your shell, .env file, or CI configuration."
+    )
+
+ENCRYPTION_KEY = key.encode()
 cipher_suite = Fernet(ENCRYPTION_KEY)
 
 # Define user roles and their permissions
