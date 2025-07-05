@@ -25,8 +25,16 @@ jobs:
 
       - name: Set dummy encryption key for tests
         run: |
-          export LUCY_ENCRYPTION_KEY=$(python -c "from cryptography.fernet import Fernet; print(Fernet.generate_key().decode())")
-          echo "LUCY_ENCRYPTION_KEY=$LUCY_ENCRYPTION_KEY" >> $GITHUB_ENV
+          python - <<'PY'
+          from cryptography.fernet import Fernet
+          import os
+
+          key = Fernet.generate_key().decode()        # 44-char valid key
+          with open(os.environ["GITHUB_ENV"], "a") as fh:
+              fh.write(f"LUCY_ENCRYPTION_KEY={key}\n")
+
+          print("Generated dummy Fernet key for CI.")
+          PY
 
       - name: Run pre-commit (Black + Ruff)
         uses: pre-commit/action@v3.0.1
