@@ -1,6 +1,4 @@
-# main.py  (replace entire file)
-
-# main.py  ── refactored
+# main.py
 from auth import authenticate
 from response_engine import generate_response_with_llm, log_interaction
 from security import enforce_rate_limit, detect_prompt_injection
@@ -45,9 +43,5 @@ def main() -> None:
     run_chat_flow(user, password, user_input)
 
 
-# ──────────────────────────────────────────────────────────────────────────────
-# The guard below means nothing runs when someone merely `import main`;
-# it *only* runs when you execute this file directly.
-# ──────────────────────────────────────────────────────────────────────────────
 if __name__ == "__main__":
     main()
