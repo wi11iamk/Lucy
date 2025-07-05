@@ -5,36 +5,27 @@ on: [push, pull_request]
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.11'}
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
+      - run: pip install -r requirements.txt
+      - run: pip install -r requirements-dev.txt
 
-      - name: Install runtime deps
-        run: pip install -r requirements.txt
-
-      - name: Install dev deps
+      # 🔑 + 🔒 secrets
+      - name: Set dummy secrets for tests
         run: |
-          if [ -f requirements-dev.txt ]; then
-            pip install -r requirements-dev.txt
-          fi
-
-      - name: Set dummy encryption key for tests
-        run: |
+          echo "OPENAI_API_KEY=dummy-ci-key" >> "$GITHUB_ENV"
           python - <<'PY'
-          from cryptography.fernet import Fernet
-          import os
-
-          key = Fernet.generate_key().decode()        # 44-char valid key
+          from cryptography.fernet import Fernet, os
           with open(os.environ["GITHUB_ENV"], "a") as fh:
-              fh.write(f"LUCY_ENCRYPTION_KEY={key}\n")
-
-          print("Generated dummy Fernet key for CI.")
+              fh.write(f"LUCY_ENCRYPTION_KEY={Fernet.generate_key().decode()}\n")
           PY
+
+      # 🧠 spaCy model
+      - name: Download small spaCy model
+        run: python -m spacy download en_core_web_sm
 
       - name: Run pre-commit (Black + Ruff)
         uses: pre-commit/action@v3.0.1
