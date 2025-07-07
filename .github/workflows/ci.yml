@@ -12,11 +12,13 @@ jobs:
 
       - run: pip install -r requirements.txt
       - run: pip install -r requirements-dev.txt
-
-      # 🔑 + 🔒 secrets
+      
+      - name: Install runtime deps
+        run: pip install -r requirements.lock
       - name: Set dummy secrets for tests
         run: |
           echo "OPENAI_API_KEY=dummy-ci-key" >> "$GITHUB_ENV"
+          echo "TOKENIZERS_PARALLELISM=false" >> "$GITHUB_ENV"
           python - <<'PY'
           from cryptography.fernet import Fernet, os
           with open(os.environ["GITHUB_ENV"], "a") as fh:
@@ -32,3 +34,5 @@ jobs:
 
       - name: Run tests
         run: pytest -q
+      - name: Build Docker image
+        run: docker build -t lucy:ci .
