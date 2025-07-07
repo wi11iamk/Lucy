@@ -3,6 +3,9 @@ from auth import authenticate
 from response_engine import generate_response_with_llm, log_interaction
 from security import enforce_rate_limit, detect_prompt_injection
 from safety_monitor import constitutional_safety_filter
+from db.session import init_db
+
+init_db()
 
 
 def run_chat_flow(user: str, password: str, user_input: str) -> None:
