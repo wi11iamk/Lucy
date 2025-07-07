@@ -20,7 +20,7 @@ def _execute(script_name: str) -> None:
             "timestamp": "2025-07-01T12:00:00Z",
             "emotion_scores": {"joy": 0.9},
             "prompt": "p",
-            "llm_response": "ok",
+            "llm_response": "⚠️ Safety Warning: test",
             "user_input": "hi",
         }
         log_path = tmp_dir / "log.jsonl"
