@@ -55,8 +55,8 @@ def enforce_rate_limit(user_id: str, limit: int = 5):
             win = RateLimitWindow(
                 user_id=user_id,
                 request_cnt=1,
-                window_end=datetime.datetime.fromtimestamp(datetime.timezone.utc)(
-                    now + 60
+                window_end=datetime.datetime.fromtimestamp(
+                    now + 60, tz=datetime.timezone.utc
                 ),
             )
             db.merge(win)
