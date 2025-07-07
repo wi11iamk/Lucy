@@ -7,16 +7,14 @@ ENV PYTHONUNBUFFERED=1 \
     HUGGING_FACE_HUB_DISABLE_TELEMETRY=1
 
 WORKDIR /app
-COPY . /app
 
-# Install build deps for spaCy model, then clean up
-RUN apt-get update && apt-get install -y --no-install-recommends build-essential \
-    && pip install --upgrade pip \
-    # install with hashes *and* CPU index
+COPY requirements.lock ./
+RUN pip install --upgrade pip \
     && pip install --require-hashes \
-       --extra-index-url https://download.pytorch.org/whl/cpu \
-       -r requirements.lock \
-    && python -m spacy download en_core_web_sm \
-    && apt-get purge -y build-essential && apt-get autoremove -y && rm -rf /var/lib/apt/lists/*
+         --extra-index-url https://download.pytorch.org/whl/cpu \
+         -r requirements.lock \
+    && python -m spacy download en_core_web_sm
+
+COPY . /app
 
 CMD ["python", "main.py"]
