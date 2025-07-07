@@ -8,3 +8,4 @@ cryptography==42.0.5
 python-dotenv==1.0.1
 numpy==1.26.4
 torch==2.3.0       # backend for transformers pipelines
+SQLAlchemy==2.0.30
