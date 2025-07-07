@@ -1,7 +1,10 @@
 import os
 import time
+import datetime
 from collections import defaultdict
 from cryptography.fernet import Fernet
+from db.session import SessionLocal
+from db.models import RateLimitWindow
 
 from dotenv import load_dotenv
 
@@ -44,19 +47,26 @@ def detect_prompt_injection(user_input):
     return user_input
 
 
-def enforce_rate_limit(user_id):
-    """Implements query rate limiting to prevent API abuse."""
-    current_time = time.time()
-    # Only keep queries made in the last 60 seconds
-    user_request_log[user_id] = [
-        t for t in user_request_log[user_id] if current_time - t < 60
-    ]
-
-    if len(user_request_log[user_id]) >= 5:  # Limit to 5 queries per minute
-        return "⚠️ Rate Limit Exceeded: Please slow down your requests."
-
-    user_request_log[user_id].append(current_time)
-    return "Request allowed."
+def enforce_rate_limit(user_id: str, limit: int = 5):
+    now = time.time()
+    with SessionLocal() as db:
+        win = db.get(RateLimitWindow, user_id)
+        if not win or now > win.window_end.timestamp():
+            win = RateLimitWindow(
+                user_id=user_id,
+                request_cnt=1,
+                window_end=datetime.datetime.fromtimestamp(datetime.timezone.utc)(
+                    now + 60
+                ),
+            )
+            db.merge(win)
+            db.commit()
+            return "Request allowed."
+        if win.request_cnt >= limit:
+            return "⚠️ Rate Limit Exceeded: Please slow down."
+        win.request_cnt += 1
+        db.commit()
+        return "Request allowed."
 
 
 def has_permission(user_role, action):

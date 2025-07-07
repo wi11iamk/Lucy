@@ -1,18 +1,13 @@
-import datetime
-import json
 import os
 import pathlib
 
 from dotenv import load_dotenv
 from openai import OpenAI
 from transformers import pipeline
+from db.session import SessionLocal
+from db.models import Interaction
 
-from config import (
-    SENTIMENT_MODEL,
-    EMOTION_MODEL,
-    FEW_SHOT_EXAMPLES,
-    LOG_FILE_PATH,
-)
+from config import SENTIMENT_MODEL, EMOTION_MODEL, FEW_SHOT_EXAMPLES
 
 # -------------------------------------------------
 load_dotenv()
@@ -96,19 +91,15 @@ def generate_response_with_llm(user_input, few_shot_examples=FEW_SHOT_EXAMPLES):
     return generated_text, emotion_scores, prompt
 
 
-def log_interaction(
-    user_input, emotion_scores, prompt, llm_response, log_file=LOG_FILE_PATH
-):
-    """
-    Log the details of the interaction for future reference and fine-tuning.
-    Logs are appended to a JSON Lines file.
-    """
-    log_entry = {
-        "timestamp": datetime.datetime.utcnow().isoformat(),
-        "user_input": user_input,
-        "emotion_scores": emotion_scores,
-        "prompt": prompt,
-        "llm_response": llm_response,
-    }
-    with open(log_file, "a") as f:
-        f.write(json.dumps(log_entry) + "\n")
+def log_interaction(user_input, emotion_scores, prompt, llm_response):
+    with SessionLocal() as db:
+        db.add(
+            Interaction(
+                user_id="local",  # or actual user id
+                user_input=user_input,
+                llm_response=llm_response,
+                emotion_scores=emotion_scores,
+                safety_flag="⚠️" in llm_response,
+            )
+        )
+        db.commit()
