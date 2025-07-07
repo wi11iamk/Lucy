@@ -42,6 +42,6 @@ def main() -> None:
     user_input = "I feel like I'm forgetting too much these days and it's really scary."
     run_chat_flow(user, password, user_input)
 
-    
+
 if __name__ == "__main__":
     main()
