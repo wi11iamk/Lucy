@@ -10,8 +10,7 @@ WORKDIR /app
 
 COPY requirements.lock ./
 RUN pip install --upgrade pip \
-    && pip install --require-hashes \
-         --extra-index-url https://download.pytorch.org/whl/cpu \
+    && pip install --extra-index-url https://download.pytorch.org/whl/cpu \
          -r requirements.lock \
     && python -m spacy download en_core_web_sm
 
