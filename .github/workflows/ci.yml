@@ -36,3 +36,6 @@ jobs:
         run: pytest -q
       - name: Build Docker image
         run: docker build -t lucy:ci .
+      
+      - name: Run analysis plot tests
+        run: pytest tests/test_analysis.py -q
