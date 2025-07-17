@@ -10,3 +10,4 @@ logs/
 
 # dotenv secrets
 .env
+lucy.db
