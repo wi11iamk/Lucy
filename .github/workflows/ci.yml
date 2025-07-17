@@ -32,6 +32,9 @@ jobs:
       - name: Run pre-commit (Black + Ruff)
         uses: pre-commit/action@v3.0.1
 
+      - name: Run migrations
+        run: alembic upgrade head
+
       - name: Run tests
         run: pytest -q
 

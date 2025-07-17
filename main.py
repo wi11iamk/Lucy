@@ -5,6 +5,19 @@ from security import enforce_rate_limit, detect_prompt_injection
 from safety_monitor import constitutional_safety_filter
 from db.session import init_db
 
+from alembic.config import Config as AlembicConfig
+from alembic import command as alembic_cmd
+from pathlib import Path
+
+
+def run_migrations() -> None:
+    cfg = AlembicConfig(str(Path(__file__).with_name("alembic.ini")))
+    alembic_cmd.upgrade(cfg, "head")
+
+
+# call once at startup, before any DB writes
+run_migrations()
+
 init_db()
 
 
