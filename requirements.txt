@@ -10,3 +10,4 @@ numpy==1.26.4
 torch==2.3.0       # backend for transformers pipelines
 SQLAlchemy==2.0.30
 alembic==1.13.1
+matplotlib~=3.9
