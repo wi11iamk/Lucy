@@ -6,6 +6,7 @@ from openai import OpenAI
 from transformers import pipeline
 from db.session import SessionLocal
 from db.models import Interaction
+from lucy_rag import fetch_topk, mark_used
 
 from config import SENTIMENT_MODEL, EMOTION_MODEL, FEW_SHOT_EXAMPLES
 
@@ -46,9 +47,21 @@ def build_prompt_with_examples(
     Build a prompt for the LLM that includes the user input, the emotion analysis,
     and optionally a set of few-shot examples.
     """
+
     emotion_summary = ", ".join(
         f"{emotion}: {score:.2f}" for emotion, score in emotion_scores.items()
     )
+    mem_block = ""
+    with SessionLocal() as db:
+        memories = fetch_topk(db, k=3)
+        if memories:
+            mem_block = (
+                "Patient memories:\n" + "\n".join(f"- {m}" for m in memories) + "\n\n"
+            )
+            for tag in memories:
+                mark_used(tag, db)
+            db.commit()
+
     prompt = (
         "You are a compassionate assistant with expertise in dementia care. "
         "Your goal is to provide an empathetic and thoughtful response to the user's message.\n\n"
@@ -63,6 +76,8 @@ def build_prompt_with_examples(
                 f"Emotion: {example['emotion_summary']}\n"
                 f"Response: {example['response']}\n\n"
             )
+
+    prompt = mem_block + prompt
     prompt += (
         "Based on the above, generate a response that acknowledges the emotional state "
         "of the user and offers comfort and understanding."
