@@ -53,7 +53,9 @@ class LifelineEvent(Base):
 class Interest(Base):
     __tablename__ = "interest"
     tag = Column(String, primary_key=True)
-    embedding = Column(LargeBinary)  # 384-d vector bytes
+    embedding = Column(LargeBinary, nullable=False)
+    weight = Column(Float, default=1.0)
+    last_used = Column(DateTime, default=dt.datetime.utcnow)
 
 
 class CarePlan(Base):
