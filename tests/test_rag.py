@@ -6,7 +6,6 @@ def test_interest_roundtrip():
     with SessionLocal() as db:
         row = upsert_interest("cats", db)
         assert row.tag == "cats"
-
         upsert_interest("cats", db)
         upsert_interest("1970 World Series", db)
         db.commit()
