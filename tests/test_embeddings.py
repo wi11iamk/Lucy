@@ -6,7 +6,7 @@ from db.models import Interest
 
 def test_embedding_vector_saved(monkeypatch):
     # monkeypatch embed() to avoid real API
-    from utils import embeddings as emb_mod
+    import utils as emb_mod
 
     monkeypatch.setattr(emb_mod, "embed", lambda txt: [42.0] * 1536)
 
