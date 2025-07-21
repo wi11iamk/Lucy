@@ -5,6 +5,8 @@ from response_engine import build_prompt_with_examples
 
 def test_prompt_includes_memories():
     with SessionLocal() as db:
+        row = upsert_interest("cats", db)
+        assert row.tag == "cats"
         upsert_interest("cats", db)
         db.commit()
     prompt = build_prompt_with_examples("How are you?", {}, [])
