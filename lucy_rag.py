@@ -1,5 +1,6 @@
 """
------------
+lucy_rag.py
+
 Helpers for storing caregiver “interests” (memory cues) and
 retrieving the top-k items with time-decay weighting.
 
@@ -17,6 +18,7 @@ from sqlalchemy import select, update
 from sqlalchemy.orm import Session
 from db import session as db_session
 
+
 from db.models import Interest
 
 _MODEL = SentenceTransformer("sentence-transformers/all-MiniLM-L6-v2")
@@ -29,6 +31,7 @@ def _vec_to_bytes(vec: np.ndarray) -> bytes:
 
 def _bytes_to_vec(buf: bytes) -> np.ndarray:
     return np.frombuffer(buf, dtype="float32")
+
 
 
 def _embed_tag(tag: str) -> list[float]:
@@ -68,6 +71,14 @@ def upsert_interest(tag: str, session=None, *, patient_id: int = 1):
     if close:
         session.close()
     return row
+# ────────────────────────── public API ───────────────────────────────
+def upsert_interest(tag: str, session: Session) -> None:
+    """Insert or update an Interest row with fresh embedding + timestamp."""
+    emb = _vec_to_bytes(_MODEL.encode(tag, normalize_embeddings=True))
+    row = session.get(Interest, tag) or Interest(tag=tag)
+    row.embedding = emb
+    row.last_used = dt.datetime.utcnow()
+    session.add(row)
 
 
 def fetch_topk(session: Session, k: int = 3, half_life_days: int = 30) -> List[str]:
@@ -83,6 +94,10 @@ def fetch_topk(session: Session, k: int = 3, half_life_days: int = 30) -> List[s
             age_days = (now - r.last_used).total_seconds() / 86_400
 
         decay = 0.5 ** (age_days / half_life_days)
+
+        age = (now - (r.last_used or now)).days
+        decay = 0.5 ** (age / half_life_days)
+
         scored.append((r.tag, r.weight * decay))
     scored.sort(key=lambda x: x[1], reverse=True)
     return [tag for tag, _ in scored[:k]]
